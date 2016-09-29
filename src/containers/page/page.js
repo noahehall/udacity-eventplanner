@@ -3,11 +3,31 @@ import Modal from 'react-modal';
 import './page.css';
 
 class Page extends Component {
-  static propTypes = { children: React.PropTypes.node };
+  static propTypes = {
+    children: React.PropTypes.node
+  }
+
+  static defaultProps = {
+
+  }
 
   constructor(props) {
     super(props);
-    this.state = { modalIsOpen: false };
+
+    //d default state
+    this.state = {
+      events: [],
+      loggedIn: false,
+      modalIsOpen: false,
+      user: {
+        email: '',
+        name: ''
+      }
+    };
+
+    // componentWillMount stuff
+    if (typeof window !== 'undefined') console.log(window.localStorage);
+    console.log('noah');
   }
 
   openModal = () => this.setState({modalIsOpen: true});
@@ -21,20 +41,35 @@ class Page extends Component {
       <div className="page">
         <ul className='navbar'>
           <li className='navitem fr'>
-            <button className='navlink fl' onClick={this.openModal}>Open Modal</button>
+            <button className='navlink fl' onClick={this.openModal}>Login</button>
             <Modal
               isOpen={this.state.modalIsOpen}
               onAfterOpen={this.afterOpenModal}
               onRequestClose={this.closeModal}
             >
-              <button onClick={this.closeModal}>close</button>
-              <div>I am a modal</div>
+              <button onClick={this.closeModal}>X</button>
+              <div>Login to U.E.P</div>
               <form>
-                <input />
-                <button>tab navigation</button>
-                <button>stays</button>
-                <button>inside</button>
-                <button>the modal</button>
+                <label htmlFor='name'>name:
+                  <input
+                    id='name'
+                    placeholder='Your First and Last Name'
+                    required
+                    type='text'
+                  />
+
+                </label>
+                <label htmlFor='email'>email:
+                  <input
+                    id='email'
+                    placeholder='Enter your email address'
+                    required
+                    type='email'
+                  />
+                </label>
+                <div>
+                  <input type='submit' />
+                </div>
               </form>
             </Modal>
           </li>

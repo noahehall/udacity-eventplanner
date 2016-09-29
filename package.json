@@ -67,7 +67,6 @@
     "postcss-import": "^8.1.2",
     "postcss-reporter": "^1.4.1",
     "react-addons-test-utils": "^15.3.1",
-    "react-markdown": "^2.4.2",
     "sinon": "^1.17.5",
     "sinon-chai": "^2.8.0",
     "stringify": "^5.1.0",

@@ -15,9 +15,13 @@ import configure from './store/configure';
 function renderFullPage(html, preloadedState) {
   return `
     <!doctype html>
-    <html>
+    <html class="no-js" lang="">
       <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
         <title>for your starter kit needs</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
       </head>
       <body>
         <div id="root">${html}</div>

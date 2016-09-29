@@ -197,7 +197,7 @@ module.exports = {
     "no-class-assign": 0,
     "no-cond-assign": 0,
     "no-confusing-arrow": 2,
-    "no-console": 2,
+    "no-console": 1,
     "no-const-assign": 2,
     "no-constant-condition": 2,
     "no-continue": 0,
