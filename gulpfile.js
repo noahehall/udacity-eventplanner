@@ -106,13 +106,13 @@ gulp.task("watch:js", () => {
 gulp.task("watch:server", () => { //eslint-disable-line arrow-body-style
   return nodemon({
     ext: "js",
-    ignore: ["gulpfile.js", "bundle.js", "node_modules/*"],
+    ignore: ["gulpfile.js", "node_modules/*"],
     script: "dist/server.js",
-    watch: 'src/server.js'
+    tasks: ['transpile:server'],
+    watch: ['src/server.js', 'dist/public/js/bundle.js']
   })
     .on("error", gutil.log)
-    .on("change", gutil.log('file changed'))
-    .on("restart", gutil.log('server restarted'));
+    .on("change", gutil.log('file changed'));
 });
 
 gulp.task('test', () => { //eslint-disable-line arrow-body-style
@@ -160,8 +160,8 @@ gulp.task('stylelint', () => { //eslint-disable-line arrow-body-style
 gulp.task("default", gulpSequence(
     'stylelint',
     'eslint',
-    //'test',
+    'test',
     'transpile:server',
-    "watch:server",
-    "watch:js"
+    "watch:js",
+    "watch:server"
 ));
