@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './notfound.css';
 
-class notfound extends Component {
+export class notfound extends Component {
   constructor(props) {
     super(props);
   }

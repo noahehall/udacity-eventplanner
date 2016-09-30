@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Modal from 'react-modal';
 import './page.css';
 
-class Page extends Component {
+export class Page extends Component {
   static propTypes = {
     children: React.PropTypes.node
   }
@@ -13,10 +13,9 @@ class Page extends Component {
 
   constructor(props) {
     super(props);
-
-    //d default state
+    //default state
     this.state = {
-      events: [],
+      events: {},
       loggedIn: false,
       modalIsOpen: false,
       user: {
@@ -26,8 +25,13 @@ class Page extends Component {
     };
 
     // componentWillMount stuff
-    if (typeof window !== 'undefined') console.log(window.localStorage);
-    console.log('noah');
+    if (typeof window !== 'undefined' && localStorage) {
+      const user = localStorage.getItem('user');
+      if (user) {
+        this.state.user = JSON.parse(user);
+        this.state.loggedIn = true;
+      }
+    }
   }
 
   openModal = () => this.setState({modalIsOpen: true});
@@ -35,6 +39,35 @@ class Page extends Component {
   // afterOpenModal = () => this.refs.subtitle.style.color = '#f00';
 
   closeModal = () => this.setState({modalIsOpen: false});
+
+  handleSignupSubmit = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const
+      email = e.currentTarget.email.value,
+      name = e.currentTarget.name.value;
+
+    const userInfo = { email, name };
+
+    this.setState({loggedIn: true, user: userInfo });
+    localStorage.setItem('user', JSON.stringify(userInfo));
+    this.closeModal();
+  }
+
+  handleLoginSubmit = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const
+      email = e.currentTarget.email.value,
+      name = e.currentTarget.name.value;
+
+    if (this.state.user.name === name && this.state.user.email === email) {
+      this.setState({loggedIn: true });
+      this.closeModal();
+    } else console.log('incorrect user', this.state.user);
+  }
 
   render() {
     return (
@@ -48,29 +81,61 @@ class Page extends Component {
               onRequestClose={this.closeModal}
             >
               <button onClick={this.closeModal}>X</button>
-              <div>Login to U.E.P</div>
-              <form>
-                <label htmlFor='name'>name:
-                  <input
-                    id='name'
-                    placeholder='Your First and Last Name'
-                    required
-                    type='text'
-                  />
-
-                </label>
-                <label htmlFor='email'>email:
-                  <input
-                    id='email'
-                    placeholder='Enter your email address'
-                    required
-                    type='email'
-                  />
-                </label>
-                <div>
-                  <input type='submit' />
-                </div>
-              </form>
+              <h1>Udacity Event Planner </h1>
+              <div>Signup to U.E.P
+                <form onSubmit={this.handleSignupSubmit}>
+                  <section>
+                    <label htmlFor='name'>name:
+                      <input
+                        id='name'
+                        placeholder='Your Name'
+                        required
+                        type='text'
+                      />
+                    </label>
+                  </section>
+                  <section>
+                    <label htmlFor='email'>email:
+                      <input
+                        id='email'
+                        placeholder='Enter your email address'
+                        required
+                        type='email'
+                      />
+                    </label>
+                  </section>
+                  <section>
+                    <input type='submit' />
+                  </section>
+                </form>
+              </div>
+              <div>Login to U.E.P
+                <form onSubmit={this.handleLoginSubmit}>
+                  <section>
+                    <label htmlFor='name'>name:
+                      <input
+                        id='name'
+                        placeholder='Your Name'
+                        required
+                        type='text'
+                      />
+                    </label>
+                  </section>
+                  <section>
+                    <label htmlFor='email'>email:
+                      <input
+                        id='email'
+                        placeholder='Enter your email address'
+                        required
+                        type='email'
+                      />
+                    </label>
+                  </section>
+                  <section>
+                    <input type='submit' />
+                  </section>
+                </form>
+              </div>
             </Modal>
           </li>
         </ul>

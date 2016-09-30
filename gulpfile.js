@@ -17,7 +17,6 @@ const
   postCss = require('browserify-postcss'),
   reporter = require('postcss-reporter'),
   source = require("vinyl-source-stream"),
-  stringify = require('stringify'),
   watchify = require("watchify");
 
 const isProd = process.env.NODE_ENV === "production";
@@ -36,10 +35,6 @@ function createBundler(useWatchify, server) {
     packageCache: {},
     plugin: isProd || !useWatchify ? [] : [lrload],
     transform: [
-      [stringify, {
-        appliesTo: { includeExtensions: ['.md'] },
-        minify: true
-      }],
       [postCss, {
         extensions: ['.css', '.scss'],
         inject: true,
@@ -121,14 +116,12 @@ gulp.task("watch:server", () => { //eslint-disable-line arrow-body-style
 });
 
 gulp.task('test', () => { //eslint-disable-line arrow-body-style
-  return gulp.src(['./src/**/*.test.js'], {read: true})
+  return gulp.src(['./src/**/*.test.js'], {read: false})
     .pipe(mocha({
-      bail: false,
       debugBrk: !isProd,
       istanbul: !isProd,
       reporter: !isProd ? 'spec' : 'nyan',
-      require: './.setup.test.js',
-      ui: 'bdd'
+      require: './.setup.test.js'
     }))
     .on("error", gutil.log);
 });
