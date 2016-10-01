@@ -61,9 +61,9 @@ export class Page extends Component {
 
     const
       email = e.currentTarget.email.value,
-      name = e.currentTarget.name.value;
+      password = e.currentTarget.password.value;
 
-    if (this.state.user.name === name && this.state.user.email === email) {
+    if (this.state.user.password === password && this.state.user.email === email) {
       this.setState({loggedIn: true });
       this.closeModal();
     } else console.log('incorrect user', this.state.user);
@@ -82,60 +82,72 @@ export class Page extends Component {
             >
               <button onClick={this.closeModal}>X</button>
               <h1>Udacity Event Planner </h1>
-              <div>Signup to U.E.P
-                <form onSubmit={this.handleSignupSubmit}>
-                  <section>
-                    <label htmlFor='name'>name:
-                      <input
-                        id='name'
-                        placeholder='Your Name'
-                        required
-                        type='text'
-                      />
-                    </label>
-                  </section>
-                  <section>
-                    <label htmlFor='email'>email:
-                      <input
-                        id='email'
-                        placeholder='Enter your email address'
-                        required
-                        type='email'
-                      />
-                    </label>
-                  </section>
-                  <section>
-                    <input type='submit' />
-                  </section>
-                </form>
-              </div>
-              <div>Login to U.E.P
-                <form onSubmit={this.handleLoginSubmit}>
-                  <section>
-                    <label htmlFor='name'>name:
-                      <input
-                        id='name'
-                        placeholder='Your Name'
-                        required
-                        type='text'
-                      />
-                    </label>
-                  </section>
-                  <section>
-                    <label htmlFor='email'>email:
-                      <input
-                        id='email'
-                        placeholder='Enter your email address'
-                        required
-                        type='email'
-                      />
-                    </label>
-                  </section>
-                  <section>
-                    <input type='submit' />
-                  </section>
-                </form>
-              </div>
+              <form id="signup-form" onSubmit={this.handleSignupSubmit} >
+                <h2>
+                  Signup to U.E.P
+                </h2>
+                <section>
+                  <label htmlFor='name'>name:
+                  </label>
+                  <input
+                    id='name'
+                    placeholder='Your Name'
+                    required
+                    type='text'
+                  />
+                </section>
+                <section>
+                  <label htmlFor='email'>email:
+                  </label>
+                  <input
+                    id='email'
+                    placeholder='Enter your email address'
+                    required
+                    type='email'
+                  />
+                </section>
+                <section>
+                  <label htmlFor='password'>password:
+                  </label>
+                  <input
+                    id='password'
+                    placeholder='Choose a password'
+                    required
+                    type='password'
+                  />
+                </section>
+                <section>
+                  <input type='submit' />
+                </section>
+              </form>
+              <form id="login-form" onSubmit={this.handleLoginSubmit} >
+                <h2>
+                Login to U.E.P
+                </h2>
+                <section>
+                  <label htmlFor='email'>email:
+                  </label>
+                  <input
+                    id='email'
+                    placeholder='Enter your email address'
+                    required
+                    type='email'
+                  />
+                </section>
+                <section>
+                  <label htmlFor='password'>password:
+                  </label>
+                  <input
+                    id='password'
+                    placeholder='Choose a password'
+                    required
+                    type='password'
+                  />
+                </section>
+                <section>
+                  <input type='submit' />
+                </section>
+              </form>
             </Modal>
           </li>
         </ul>
