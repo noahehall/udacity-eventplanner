@@ -7,6 +7,10 @@ export class Page extends Component {
     children: React.PropTypes.node,
   }
 
+  static childContextTypes = {
+    loggedIn: React.PropTypes.bool,
+  }
+
   static defaultProps = {
 
   }
@@ -32,6 +36,12 @@ export class Page extends Component {
     }
   }
 
+  getChildContext() {
+    return {
+      loggedIn: this.state.loggedIn,
+    };
+  }
+
   openModal = () => {
     if (this.state.loggedIn) this.setState({loggedIn: false, modalIsOpen: false });
     else this.setState({modalIsOpen: true});
@@ -50,9 +60,8 @@ export class Page extends Component {
       name = e.currentTarget.name.value,
       password = e.currentTarget.password.value;
 
-    console.log('password is', password);
-
-    const userInfo = { email, name, password };
+    const
+      userInfo = { email, name, password };
 
     this.setState({loggedIn: true, user: userInfo });
     localStorage.setItem('user', JSON.stringify(userInfo));
