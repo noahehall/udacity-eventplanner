@@ -4,7 +4,7 @@ import './page.css';
 
 export class Page extends Component {
   static propTypes = {
-    children: React.PropTypes.node
+    children: React.PropTypes.node,
   }
 
   static defaultProps = {
@@ -20,21 +20,22 @@ export class Page extends Component {
       modalIsOpen: false,
       user: {
         email: '',
-        name: ''
-      }
+        name: '',
+        password: '',
+      },
     };
 
     // componentWillMount stuff
     if (typeof window !== 'undefined' && localStorage) {
       const user = localStorage.getItem('user');
-      if (user) {
-        this.state.user = JSON.parse(user);
-        this.state.loggedIn = true;
-      }
+      if (user) this.state.user = JSON.parse(user);
     }
   }
 
-  openModal = () => this.setState({modalIsOpen: true});
+  openModal = () => {
+    if (this.state.loggedIn) this.setState({loggedIn: false, modalIsOpen: false });
+    else this.setState({modalIsOpen: true});
+  };
 
   // afterOpenModal = () => this.refs.subtitle.style.color = '#f00';
 
@@ -46,9 +47,12 @@ export class Page extends Component {
 
     const
       email = e.currentTarget.email.value,
-      name = e.currentTarget.name.value;
+      name = e.currentTarget.name.value,
+      password = e.currentTarget.password.value;
 
-    const userInfo = { email, name };
+    console.log('password is', password);
+
+    const userInfo = { email, name, password };
 
     this.setState({loggedIn: true, user: userInfo });
     localStorage.setItem('user', JSON.stringify(userInfo));
@@ -71,30 +75,36 @@ export class Page extends Component {
 
   render() {
     return (
-      <div className="page">
+      <div className='page'>
         <ul className='navbar'>
           <li className='navitem fr'>
-            <button className='navlink fl' onClick={this.openModal}>Login</button>
+            <button className='navlink fl' onClick={this.openModal}>{this.state.loggedIn ? 'Logout' : 'Start'}</button>
             <Modal
               isOpen={this.state.modalIsOpen}
               onAfterOpen={this.afterOpenModal}
               onRequestClose={this.closeModal}
+              // closeTimeoutMS={n}
+              // style={customStyle}
             >
-              <button onClick={this.closeModal}>X</button>
-              <h1>Udacity Event Planner </h1>
-              <form id="signup-form" onSubmit={this.handleSignupSubmit} >
+              <button className='close-modal' onClick={this.closeModal} >X</button>
+              <h1>Udacity Event Planner</h1>
+              <form id='signup-form' onSubmit={this.handleSignupSubmit} >
                 <h2>
                   Signup to U.E.P
                 </h2>
                 <div>
-                  <div>Error! here is the message</div>
+                  <section className='no-error'>Error! here is the message</section>
                   <section>
                     <label htmlFor='name'>name:
                     </label>
                     <input
                       id='name'
+                      maxLength={30}
+                      minLength={2}
+                      pattern='[A-Za-z]{2,30}'
                       placeholder='Your Name'
                       required
+                      title='at least two (to 30) letters'
                       type='text'
                     />
                   </section>
@@ -114,12 +124,12 @@ export class Page extends Component {
                   </label>
                   <input
                     id='password'
-                    maxLength={20}
+                    maxLength={15}
                     minLength={4}
-                    pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{3,15}$"
+                    pattern='^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,15}$'
                     placeholder='Choose a password'
                     required
-                    title="min length 3, max 15, at least one upper case letter, one lower case letter, and one numeric digit."
+                    title='min length 4, max 15, at least one upper case letter, one lower case letter, and one numeric digit.'
                     type='password'
                   />
                 </section>
@@ -127,7 +137,7 @@ export class Page extends Component {
                   <input type='submit' />
                 </section>
               </form>
-              <form id="login-form" onSubmit={this.handleLoginSubmit} >
+              <form id='login-form' onSubmit={this.handleLoginSubmit} >
                 <h2>
                 Login to U.E.P
                 </h2>

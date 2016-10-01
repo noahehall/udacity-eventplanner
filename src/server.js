@@ -48,7 +48,7 @@ app.get("*", (req, res) => {
     if (!renderProps) return res.status(404).end('Not found.');
     //setup store based on data sent in
     const store = configure(Immutable.fromJS({
-      msg:'hello noah'
+      msg:'hello noah',
     }));
     const initialState = store.getState();
 

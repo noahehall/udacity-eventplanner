@@ -35,11 +35,17 @@
       }
     }
   }
-
 }
 
-#login-form,
-#signup-form {
+.close-modal {
+  float: right;
+}
+
+form {
+  & .no-error {
+    display: none;
+  }
+
   & section {
     display: flex;
     flex-direction: row;
@@ -58,5 +64,4 @@
       flex-basis: 100%;
     }
   }
-
 }

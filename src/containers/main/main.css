@@ -9,8 +9,4 @@
       margin-top: 15px;
     }
   }
-
-  & .no-error {
-    display: none;
-  }
 }
