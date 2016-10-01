@@ -29,6 +29,7 @@ class Main extends Component {
       });
     }
   }
+
   getCreateEventForm = () =>
     <div className='main'>
       <form id='eventcreate-form' onSubmit={this.handleCreateEventSubmission} >
@@ -186,7 +187,8 @@ class Main extends Component {
 
     return events.length ? events.map((event, idx) =>
       <article key={idx}>
-        <h1>Event Name: {event.eventname} <br /><small>id: {idx}</small></h1>
+        <h1>Event Name: {event.eventname}</h1>
+        <button onClick={() => this.deleteEvent(idx)}> Delete this event </button>
         <section>
           <div>Event Host: {event.eventhostname}</div>
           <div>Event eventstart: {event.eventstart}</div>
@@ -196,9 +198,21 @@ class Main extends Component {
           <div>Event message: {event.message}</div>
         </section>
       </article>
-    ) :
-    'no events exist';
+    ).reverse() :
+    'You have no saved events';
   };
+
+  deleteEvent = (id) => {
+    const events = this.state.events.splice(0);
+    if (events[id]) {
+      events.splice(id, 1);
+      this.setState({events});
+      localStorage.setItem(
+        'events',
+        JSON.stringify([...events]
+      ));
+    } else this.setState({events: []});
+  }
 
   render() {
     const view = this.context.loggedIn ? this.getCreateEventForm() : this.getNewUserWelcome();
@@ -206,7 +220,7 @@ class Main extends Component {
     return (
       <div>
         {view}
-        {this.state.hasEvents && this.context.loggedIn && this.displayCreatedEvents().reverse()}
+        {this.state.hasEvents && this.context.loggedIn && this.displayCreatedEvents()}
       </div>
     );
   }

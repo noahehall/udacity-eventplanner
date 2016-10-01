@@ -164,9 +164,9 @@ export class Page extends Component {
     </form>;
 
   render() {
-    const showNavMessage = this.state.loggedIn &&
+    const showNavMessage =
       <li className='navitem fl'>
-        <h1>Udacity Event Planner</h1>
+        <h1>{this.state.loggedIn ? 'Udacity Event Planner': 'Application by @noahedwardhall'}</h1>
       </li>;
 
     return (
