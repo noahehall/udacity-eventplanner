@@ -144,10 +144,9 @@ class Main extends Component {
     </div>;
 
   getNewUserWelcome = () =>
-    <div>
-      <h2>Hello!</h2>
+    <section>
       <p>Use the button in the navigation bar to get started with our Udacity Event Planner</p>
-    </div>
+    </section>
 
   handleCreateEventSubmission = (e) => {
     e.preventDefault();
@@ -186,9 +185,8 @@ class Main extends Component {
     const events = this.state.events;
 
     return events.length ? events.map((event, idx) =>
-      <article key={idx}>
-        <h1>Event Name: {event.eventname}</h1>
-        <button onClick={() => this.deleteEvent(idx)}> Delete this event </button>
+      <article className='single-event' key={idx} >
+        <h2>Event Name: {event.eventname} <button onClick={() => this.deleteEvent(idx)}> Delete this event </button></h2>
         <section>
           <div>Event Host: {event.eventhostname}</div>
           <div>Event eventstart: {event.eventstart}</div>
@@ -216,11 +214,14 @@ class Main extends Component {
 
   render() {
     const view = this.context.loggedIn ? this.getCreateEventForm() : this.getNewUserWelcome();
+    const eventsDisplayed = this.state.hasEvents && this.context.loggedIn ?
+      this.displayCreatedEvents() :
+      null;
 
     return (
       <div>
         {view}
-        {this.state.hasEvents && this.context.loggedIn && this.displayCreatedEvents()}
+        {eventsDisplayed}
       </div>
     );
   }

@@ -1,6 +1,11 @@
 .main {
   background-color: white;
   padding: 20px;
+  padding-bottom: 0;
+
+  & h1 {
+    margin-bottom: 0;
+  }
 
   & ul {
     list-style: none;
@@ -8,5 +13,15 @@
     & li {
       margin-top: 15px;
     }
+  }
+}
+
+.single-event {
+  padding: 20px;
+  padding-bottom: 0;
+
+  & h2 {
+    margin-top: 0;
+    font-size: 1.2em;
   }
 }

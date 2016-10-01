@@ -17,6 +17,10 @@
         padding-left: 1em;
       }
 
+      & button {
+        border: none;
+      }
+
       & .navlink {
         display: block;
         color: black;
