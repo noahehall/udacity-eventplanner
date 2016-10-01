@@ -86,16 +86,19 @@ export class Page extends Component {
                 <h2>
                   Signup to U.E.P
                 </h2>
-                <section>
-                  <label htmlFor='name'>name:
-                  </label>
-                  <input
-                    id='name'
-                    placeholder='Your Name'
-                    required
-                    type='text'
-                  />
-                </section>
+                <div>
+                  <div>Error! here is the message</div>
+                  <section>
+                    <label htmlFor='name'>name:
+                    </label>
+                    <input
+                      id='name'
+                      placeholder='Your Name'
+                      required
+                      type='text'
+                    />
+                  </section>
+                </div>
                 <section>
                   <label htmlFor='email'>email:
                   </label>
@@ -111,8 +114,12 @@ export class Page extends Component {
                   </label>
                   <input
                     id='password'
+                    maxLength={20}
+                    minLength={4}
+                    pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{3,15}$"
                     placeholder='Choose a password'
                     required
+                    title="min length 3, max 15, at least one upper case letter, one lower case letter, and one numeric digit."
                     type='password'
                   />
                 </section>
