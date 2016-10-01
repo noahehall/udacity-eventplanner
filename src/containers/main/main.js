@@ -20,11 +20,11 @@ class Main extends Component {
         <div>
           <section className='no-error'>Error! here is the message</section>
           <section>
-            <label htmlFor='name'>Name of the event
+            <label htmlFor='eventname'>Event Name
             </label>
             <input
-              id='name'
-              placeholder='Your Name'
+              id='eventname'
+              placeholder='Name of your event'
               required
               type='text'
             />
@@ -33,11 +33,11 @@ class Main extends Component {
         <div>
           <section className='no-error'>Error! here is the message</section>
           <section>
-            <label htmlFor='name'>Type of the event (birthday party, conference talk, wedding, etc.)
+            <label htmlFor='eventhostname'>Event Host Name
             </label>
             <input
-              id='name'
-              placeholder='Your Name'
+              id='eventhostname'
+              placeholder='Host Name'
               required
               type='text'
             />
@@ -46,53 +46,56 @@ class Main extends Component {
         <div>
           <section className='no-error'>Error! here is the message</section>
           <section>
-            <label htmlFor='name'>Event host (could be an individual’s name or an organization)
+            <label htmlFor='eventstart'>Starts
             </label>
             <input
-              id='name'
-              placeholder='Your Name'
+              id='eventstart'
+              placeholder='Date and time the event starts'
               required
-              type='text'
+              type='datetime-local'
             />
           </section>
         </div>
         <div>
           <section className='no-error'>Error! here is the message</section>
           <section>
-            <label htmlFor='name'>Event start date and time
+            <label htmlFor='eventend'>Ends
             </label>
             <input
-              id='name'
-              placeholder='Your Name'
+              id='eventend'
+              placeholder='Date and time the event ends'
               required
-              type='text'
+              type='datetime-local'
             />
           </section>
         </div>
         <div>
           <section className='no-error'>Error! here is the message</section>
           <section>
-            <label htmlFor='name'>Event end date and time
+            <label htmlFor='eventtype'>Event Type
             </label>
             <input
-              id='name'
-              placeholder='Your Name'
-              required
+              id='eventtype'
+              list='eventtypelist'
+              placeholder='Type of event'
               type='text'
             />
+            <datalist id='eventtypelist'>
+              <select>
+                <option value='birthday'>Birthday Party</option>
+                <option value='conference'>Conference</option>
+                <option value='wedding'>Wedding</option>
+                <option value='other' >Other</option>
+              </select>
+            </datalist>
           </section>
         </div>
         <div>
           <section className='no-error'>Error! here is the message</section>
           <section>
-            <label htmlFor='name'>Guest list
+            <label htmlFor='guestlist'>Guest list
             </label>
-            <input
-              id='name'
-              placeholder='Your Name'
-              required
-              type='text'
-            />
+            <textarea id='guestlist' value='Enter one name per line' />
           </section>
         </div>
         <div>
@@ -138,7 +141,7 @@ class Main extends Component {
     </div>
 
   render() {
-    const view = this.context.loggedIn ? this.getCreateEventForm() : this.getNewUserWelcome();
+    const view = !this.context.loggedIn ? this.getCreateEventForm() : this.getNewUserWelcome();
 
     return view;
   }
