@@ -161,7 +161,6 @@ gulp.task("default", gulpSequence(
     'stylelint',
     'eslint',
     'test',
-    'transpile:server',
     "watch:js",
     "watch:server"
 ));

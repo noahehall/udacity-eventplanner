@@ -19,7 +19,6 @@ export class Page extends Component {
     super(props);
     //default state
     this.state = {
-      events: {},
       loggedIn: false,
       modalIsOpen: false,
       user: {
@@ -82,12 +81,100 @@ export class Page extends Component {
     } else console.log('incorrect user', this.state.user);
   }
 
+  getSignupForm = () =>
+    <form id='signup-form' onSubmit={this.handleSignupSubmit} >
+      <h2>
+        Signup to U.E.P
+      </h2>
+      <div>
+        <section className='no-error'>Error! here is the message</section>
+        <section>
+          <label htmlFor='name'>name:
+          </label>
+          <input
+            id='name'
+            maxLength={30}
+            minLength={2}
+            pattern='[A-Za-z]{2,30}'
+            placeholder='Your Name'
+            required
+            title='at least two (to 30) letters'
+            type='text'
+          />
+        </section>
+      </div>
+      <section>
+        <label htmlFor='email'>email:
+        </label>
+        <input
+          id='email'
+          placeholder='Enter your email address'
+          required
+          type='email'
+        />
+      </section>
+      <section>
+        <label htmlFor='password'>password:
+        </label>
+        <input
+          id='password'
+          maxLength={15}
+          minLength={4}
+          pattern='^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,15}$'
+          placeholder='Choose a password'
+          required
+          title='min length 4, max 15, at least one upper case letter, one lower case letter, and one numeric digit.'
+          type='password'
+        />
+      </section>
+      <section>
+        <input type='submit' />
+      </section>
+    </form>;
+
+  getLoginForm = () =>
+    <form autoComplete='on' id='login-form' onSubmit={this.handleLoginSubmit} >
+      <h2>
+      Login to U.E.P
+      </h2>
+      <section>
+        <label htmlFor='email'>email:
+        </label>
+        <input
+          autoFocus
+          id='email'
+          placeholder='Enter your email address'
+          required
+          type='email'
+        />
+      </section>
+      <section>
+        <label htmlFor='password'>password:
+        </label>
+        <input
+          id='password'
+          placeholder='Choose a password'
+          required
+          type='password'
+        />
+      </section>
+      <section>
+        <input type='submit' />
+      </section>
+    </form>;
+
   render() {
+    const showNavMessage = this.state.loggedIn &&
+      <li className='navitem fl'>
+        <h1>Udacity Event Planner</h1>
+      </li>;
+
     return (
       <div className='page'>
         <ul className='navbar'>
+          {showNavMessage}
           <li className='navitem fr'>
-            <button className='navlink fl' onClick={this.openModal}>{this.state.loggedIn ? 'Logout' : 'Start'}</button>
+            <button className='navlink' onClick={this.openModal}>{this.state.loggedIn ? 'Logout' : 'Start'}</button>
             <Modal
               isOpen={this.state.modalIsOpen}
               onAfterOpen={this.afterOpenModal}
@@ -97,83 +184,8 @@ export class Page extends Component {
             >
               <button className='close-modal' onClick={this.closeModal} >X</button>
               <h1>Udacity Event Planner</h1>
-              <form id='signup-form' onSubmit={this.handleSignupSubmit} >
-                <h2>
-                  Signup to U.E.P
-                </h2>
-                <div>
-                  <section className='no-error'>Error! here is the message</section>
-                  <section>
-                    <label htmlFor='name'>name:
-                    </label>
-                    <input
-                      id='name'
-                      maxLength={30}
-                      minLength={2}
-                      pattern='[A-Za-z]{2,30}'
-                      placeholder='Your Name'
-                      required
-                      title='at least two (to 30) letters'
-                      type='text'
-                    />
-                  </section>
-                </div>
-                <section>
-                  <label htmlFor='email'>email:
-                  </label>
-                  <input
-                    id='email'
-                    placeholder='Enter your email address'
-                    required
-                    type='email'
-                  />
-                </section>
-                <section>
-                  <label htmlFor='password'>password:
-                  </label>
-                  <input
-                    id='password'
-                    maxLength={15}
-                    minLength={4}
-                    pattern='^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,15}$'
-                    placeholder='Choose a password'
-                    required
-                    title='min length 4, max 15, at least one upper case letter, one lower case letter, and one numeric digit.'
-                    type='password'
-                  />
-                </section>
-                <section>
-                  <input type='submit' />
-                </section>
-              </form>
-              <form id='login-form' onSubmit={this.handleLoginSubmit} >
-                <h2>
-                Login to U.E.P
-                </h2>
-                <section>
-                  <label htmlFor='email'>email:
-                  </label>
-                  <input
-                    id='email'
-                    placeholder='Enter your email address'
-                    required
-                    type='email'
-                  />
-                </section>
-                <section>
-                  <label htmlFor='password'>password:
-                  </label>
-                  <input
-                    id='password'
-                    placeholder='Choose a password'
-                    required
-                    type='password'
-                  />
-                </section>
-                <section>
-                  <input type='submit' />
-                </section>
-              </form>
+              {this.getSignupForm()}
+              {this.getLoginForm()}
             </Modal>
           </li>
         </ul>

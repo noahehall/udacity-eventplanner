@@ -9,11 +9,29 @@ class Main extends Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      events: [],
+      hasEvents: false,
+    };
   }
 
+  componentDidMount() {
+    this.parseLocalStorageEvents();
+  }
+
+  parseLocalStorageEvents = () => {
+    if (typeof window !== 'undefined' && localStorage) {
+      const events = localStorage.getItem('events');
+      if (events) this.setState({
+        events: [...JSON.parse(events)],
+        hasEvents: true,
+      });
+    }
+  }
   getCreateEventForm = () =>
     <div className='main'>
-      <form id='eventcreate-form' onSubmit={this.handleSignupSubmit} >
+      <form id='eventcreate-form' onSubmit={this.handleCreateEventSubmission} >
         <h2>
           Create an event
         </h2>
@@ -37,7 +55,7 @@ class Main extends Component {
             </label>
             <input
               id='eventhostname'
-              placeholder='Host Name'
+              placeholder='Person or Organization hosting the event'
               required
               type='text'
             />
@@ -52,7 +70,7 @@ class Main extends Component {
               id='eventstart'
               placeholder='Date and time the event starts'
               required
-              type='datetime-local'
+              type='date'
             />
           </section>
         </div>
@@ -65,7 +83,7 @@ class Main extends Component {
               id='eventend'
               placeholder='Date and time the event ends'
               required
-              type='datetime-local'
+              type='date'
             />
           </section>
         </div>
@@ -95,33 +113,23 @@ class Main extends Component {
           <section>
             <label htmlFor='guestlist'>Guest list
             </label>
-            <textarea id='guestlist' value='Enter one name per line' />
+            <textarea id='guestlist' placeholder='Enter one name per line' />
           </section>
         </div>
         <div>
           <section className='no-error'>Error! here is the message</section>
           <section>
-            <label htmlFor='name'>Location
+            <label htmlFor='location'>Location
             </label>
-            <input
-              id='name'
-              placeholder='Your Name'
-              required
-              type='text'
-            />
+            <textarea id='location' placeholder='Location (and directions) to event' />
           </section>
         </div>
         <div>
           <section className='no-error'>Error! here is the message</section>
           <section>
-            <label htmlFor='name'>Optional message to the guests with additional information about the event
+            <label htmlFor='message'>Message
             </label>
-            <input
-              id='name'
-              placeholder='Your Name'
-              required
-              type='text'
-            />
+            <textarea id='message' placeholder='Optional message to the guests with additional information about the event' />
           </section>
         </div>
         <section>
@@ -140,10 +148,67 @@ class Main extends Component {
       <p>Use the button in the navigation bar to get started with our Udacity Event Planner</p>
     </div>
 
-  render() {
-    const view = !this.context.loggedIn ? this.getCreateEventForm() : this.getNewUserWelcome();
+  handleCreateEventSubmission = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
 
-    return view;
+    const
+      eventend = e.currentTarget.eventend.value,
+      eventhostname = e.currentTarget.eventhostname.value,
+      eventname = e.currentTarget.eventname.value,
+      eventstart = e.currentTarget.eventstart.value,
+      eventtype = e.currentTarget.eventtype.value,
+      location = e.currentTarget.location.value,
+      message = e.currentTarget.message.value;
+
+    const
+      eventInfo = {
+        eventend,
+        eventhostname,
+        eventname,
+        eventstart,
+        eventtype,
+        location,
+        message,
+      };
+
+    this.setState({
+      events: [...this.state.events, eventInfo]
+    });
+    localStorage.setItem(
+      'events',
+      JSON.stringify([...this.state.events, eventInfo]
+    ));
+  }
+
+  displayCreatedEvents = () => {
+    const events = this.state.events;
+
+    return events.length ? events.map((event, idx) =>
+      <article key={idx}>
+        <h1>Event Name: {event.eventname} <br /><small>id: {idx}</small></h1>
+        <section>
+          <div>Event Host: {event.eventhostname}</div>
+          <div>Event eventstart: {event.eventstart}</div>
+          <div>Event eventend: {event.eventend}</div>
+          <div>Event eventtype: {event.eventtype}</div>
+          <div>Event location: {event.location}</div>
+          <div>Event message: {event.message}</div>
+        </section>
+      </article>
+    ) :
+    'no events exist';
+  };
+
+  render() {
+    const view = this.context.loggedIn ? this.getCreateEventForm() : this.getNewUserWelcome();
+
+    return (
+      <div>
+        {view}
+        {this.state.hasEvents && this.context.loggedIn && this.displayCreatedEvents().reverse()}
+      </div>
+    );
   }
 }
 
