@@ -197,6 +197,7 @@ export class Page extends Component {
     return (
       <div className='page'>
         <Helmet
+          htmlAttributes={{lang: 'en'}}
           meta={[
             {content: "Udacity Event Planner by @noahedwardhall", name: "description"},
             {content: 'Home', property: 'og:title'},
