@@ -37,7 +37,7 @@ function createBundler(useWatchify, server) {
     transform: [
       [postCss, {
         extensions: ['.css', '.scss'],
-        inject: true,
+        inject: false,
         plugin:[
           ['postcss-cssnext', {
             browsers: ['last 3 versions']

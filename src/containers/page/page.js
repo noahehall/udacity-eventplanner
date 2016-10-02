@@ -6,7 +6,8 @@ import {
   clearFirstChildElementError,
 } from '../../lib/dom';
 
-import './page.css';
+import styles from './page.css';
+
 export class Page extends Component {
   static propTypes = {
     children: React.PropTypes.node,
@@ -194,6 +195,7 @@ export class Page extends Component {
 
     return (
       <div className='page'>
+        <style scoped type='text/css'>{styles}</style>
         <ul className='navbar'>
           {showNavMessage}
           <li className='navitem fr'>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { checkValidOnBlur } from '../../lib/dom';
 
-import './main.css';
+import styles from './main.css';
 
 class Main extends Component {
   static contextTypes = {
@@ -218,6 +218,7 @@ class Main extends Component {
 
     return (
       <div>
+        <style scoped type='text/css'>{styles}</style>
         {view}
         {eventsDisplayed}
       </div>
