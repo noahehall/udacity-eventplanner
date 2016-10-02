@@ -30,6 +30,9 @@ class Main extends Component {
     }
   }
 
+  checkValidOnBlur = (e) => {
+    console.log(e.currentTarget);
+  }
   getCreateEventForm = () =>
     <div className='main'>
       <form id='eventcreate-form' onSubmit={this.handleCreateEventSubmission} >
@@ -43,8 +46,10 @@ class Main extends Component {
             </label>
             <input
               id='eventname'
+              onBlur={this.checkValidOnBlur}
               placeholder='Name of your event'
               required
+              title='Give your event a memorable name'
               type='text'
             />
           </section>
@@ -56,6 +61,7 @@ class Main extends Component {
             </label>
             <input
               id='eventhostname'
+              onBlur={this.checkValidOnBlur}
               placeholder='Person or Organization hosting the event'
               required
               type='text'
@@ -69,6 +75,7 @@ class Main extends Component {
             </label>
             <input
               id='eventstart'
+              onBlur={this.checkValidOnBlur}
               placeholder='Date and time the event starts'
               required
               type='date'
@@ -82,10 +89,22 @@ class Main extends Component {
             </label>
             <input
               id='eventend'
+              onBlur={this.checkValidOnBlur}
               placeholder='Date and time the event ends'
               required
               type='date'
             />
+          </section>
+        </div>
+        <div>
+          <section className='no-error'>Error! here is the message</section>
+          <section>
+            <label htmlFor='location'>Location
+            </label>
+            <textarea
+              id='location'
+              onBlur={this.checkValidOnBlur}
+              placeholder='Location (and directions) to event' />
           </section>
         </div>
         <div>
@@ -115,14 +134,6 @@ class Main extends Component {
             <label htmlFor='guestlist'>Guest list
             </label>
             <textarea id='guestlist' placeholder='Enter one name per line' />
-          </section>
-        </div>
-        <div>
-          <section className='no-error'>Error! here is the message</section>
-          <section>
-            <label htmlFor='location'>Location
-            </label>
-            <textarea id='location' placeholder='Location (and directions) to event' />
           </section>
         </div>
         <div>
@@ -213,7 +224,7 @@ class Main extends Component {
   }
 
   render() {
-    const view = this.context.loggedIn ? this.getCreateEventForm() : this.getNewUserWelcome();
+    const view = !this.context.loggedIn ? this.getCreateEventForm() : this.getNewUserWelcome();
     const eventsDisplayed = this.state.hasEvents && this.context.loggedIn ?
       this.displayCreatedEvents() :
       null;
