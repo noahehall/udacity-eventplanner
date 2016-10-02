@@ -32,28 +32,15 @@ class Main extends Component {
 
   checkValidOnBlur = (e) => {
     const el = e.currentTarget;
-    if (el && el.willValidate && !el.validity.valid) {
-      // el.setCustomValidity(el.validationMessage);
-      // el.title = el.validationMessage;
+    if (el.willValidate && !el.validity.valid) {
       el.className = 'has-error';
-    } else {
+      el.previousSibling.firstElementChild.innerHTML = el.validationMessage;
+    }else {
       el.setCustomValidity('');
       el.className = '';
-      // el.title = '';
+      el.previousSibling.firstElementChild.innerHTML = el.validationMessage;
     }
   }
-
-  hasError = (el) => !el ||
-    el.validity.valueMissing ||
-    el.validity.typeMismatch ||
-    el.validity.patternMismatch ||
-    el.validity.tooLong ||
-    el.validity.tooShort ||
-    el.validity.rangeUnderflow ||
-    el.validity.rangeOverflow ||
-    el.validity.stepMismatch ||
-    el.validity.badInput ||
-    !el.validity.valid;
 
   getCreateEventForm = () =>
     <div className='main'>
@@ -62,40 +49,42 @@ class Main extends Component {
           Create an event
         </h2>
         <div>
-          <section className='no-error'>Error! here is the message</section>
           <section>
-            <label htmlFor='eventname'>Event Name
+            <label htmlFor='eventname'>Event Name<span className='error' />
             </label>
             <input
               id='eventname'
-              //minLength={4}
+              maxLength={20}
+              minLength={2}
               onBlur={this.checkValidOnBlur}
-              pattern='\w{3}'
+              pattern='\w+'
               placeholder='Name of your event'
               required
-              title='Give your event a memorable name with atleast four characters'
+              title='Give your event a memorable name between two and twenty characters'
               type='text'
             />
           </section>
         </div>
         <div>
-          <section className='no-error'>Error! here is the message</section>
           <section>
-            <label htmlFor='eventhostname'>Event Host Name
+            <label htmlFor='eventhostname'>Event Host Name<span className='error' />
             </label>
             <input
               id='eventhostname'
+              maxLength={20}
+              minLength={2}
               onBlur={this.checkValidOnBlur}
+              pattern='\w+'
               placeholder='Person or Organization hosting the event'
               required
+              title='Enter between two and twenty characters'
               type='text'
             />
           </section>
         </div>
         <div>
-          <section className='no-error'>Error! here is the message</section>
           <section>
-            <label htmlFor='eventstart'>Starts
+            <label htmlFor='eventstart'>Starts<span className='error' />
             </label>
             <input
               id='eventstart'
@@ -107,9 +96,8 @@ class Main extends Component {
           </section>
         </div>
         <div>
-          <section className='no-error'>Error! here is the message</section>
           <section>
-            <label htmlFor='eventend'>Ends
+            <label htmlFor='eventend'>Ends<span className='error' />
             </label>
             <input
               id='eventend'
@@ -121,9 +109,9 @@ class Main extends Component {
           </section>
         </div>
         <div>
-          <section className='no-error'>Error! here is the message</section>
+
           <section>
-            <label htmlFor='location'>Location
+            <label htmlFor='location'>Location<span className='error' />
             </label>
             <textarea
               id='location'
@@ -132,9 +120,9 @@ class Main extends Component {
           </section>
         </div>
         <div>
-          <section className='no-error'>Error! here is the message</section>
+
           <section>
-            <label htmlFor='eventtype'>Event Type
+            <label htmlFor='eventtype'>Event Type<span className='error' />
             </label>
             <input
               id='eventtype'
@@ -153,7 +141,7 @@ class Main extends Component {
           </section>
         </div>
         <div>
-          <section className='no-error'>Error! here is the message</section>
+
           <section>
             <label htmlFor='guestlist'>Guest list
             </label>
@@ -161,9 +149,8 @@ class Main extends Component {
           </section>
         </div>
         <div>
-          <section className='no-error'>Error! here is the message</section>
           <section>
-            <label htmlFor='message'>Message
+            <label htmlFor='message'>Message<span className='error' />
             </label>
             <textarea id='message' placeholder='Optional message to the guests with additional information about the event' />
           </section>
