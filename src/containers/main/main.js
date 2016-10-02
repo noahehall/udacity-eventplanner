@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { checkValidOnBlur } from '../../lib/dom';
 
 import './main.css';
 
@@ -30,17 +31,6 @@ class Main extends Component {
     }
   }
 
-  checkValidOnBlur = (e) => {
-    const el = e.currentTarget;
-    if (el.willValidate && !el.validity.valid) {
-      el.className = 'has-error';
-      el.previousSibling.firstElementChild.innerHTML = el.validationMessage;
-    } else {
-      el.className = '';
-      el.previousSibling.firstElementChild.innerHTML = el.validationMessage;
-    }
-  }
-
   getCreateEventForm = () =>
     <div className='main'>
       <form id='eventcreate-form' onSubmit={this.handleCreateEventSubmission} >
@@ -54,7 +44,7 @@ class Main extends Component {
             id='eventname'
             maxLength={20}
             minLength={2}
-            onBlur={this.checkValidOnBlur}
+            onBlur={(e) => checkValidOnBlur(e, true)}
             pattern='(?:\w+\s*)+\s*\w+'
             placeholder='Name of your event'
             required
@@ -69,8 +59,8 @@ class Main extends Component {
             id='eventhostname'
             maxLength={20}
             minLength={2}
-            onBlur={this.checkValidOnBlur}
-            pattern='\w+'
+            onBlur={(e) => checkValidOnBlur(e, true)}
+            pattern='(?:\w+\s*)+\s*\w+'
             placeholder='Person or Organization hosting the event'
             required
             title='Enter between two and twenty characters'
@@ -82,7 +72,7 @@ class Main extends Component {
           </label>
           <input
             id='eventstart'
-            onBlur={this.checkValidOnBlur}
+            onBlur={(e) => checkValidOnBlur(e, true)}
             placeholder='Date and time the event starts'
             required
             type='date'
@@ -93,7 +83,7 @@ class Main extends Component {
           </label>
           <input
             id='eventend'
-            onBlur={this.checkValidOnBlur}
+            onBlur={(e) => checkValidOnBlur(e, true)}
             placeholder='Date and time the event ends'
             required
             type='date'
@@ -106,7 +96,7 @@ class Main extends Component {
             id='location'
             maxLength={20}
             minLength={2}
-            onBlur={this.checkValidOnBlur}
+            onBlur={(e) => checkValidOnBlur(e, true)}
             placeholder='Location (and directions) to event'
             required
           />
