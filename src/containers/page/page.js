@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
-import './page.css';
+import { checkValidOnBlur } from '../../lib/dom';
 
+import './page.css';
 export class Page extends Component {
   static propTypes = {
     children: React.PropTypes.node,
@@ -64,6 +65,7 @@ export class Page extends Component {
 
     this.setState({loggedIn: true, user: userInfo });
     localStorage.setItem('user', JSON.stringify(userInfo));
+    e.currentTarget.reset();
     this.closeModal();
   }
 
@@ -77,6 +79,7 @@ export class Page extends Component {
 
     if (this.state.user.password === password && this.state.user.email === email) {
       this.setState({loggedIn: true });
+      e.currentTarget.reset();
       this.closeModal();
     } else console.log('incorrect user', this.state.user);
   }
