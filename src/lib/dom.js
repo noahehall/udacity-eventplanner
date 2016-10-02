@@ -1,5 +1,5 @@
 export const setPreviousElementError = (el) =>
-  el.previousSibling.firstElementChild.innerHTML = el.validationMessage;
+  el.previousSibling.firstElementChild.innerHTML = `${el.validationMessage}<br />${el.title}`;
 
 export const clearPreviousElementError = (el) =>
   el.previousSibling.firstElementChild.innerHTML = el.validationMessage;

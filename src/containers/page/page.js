@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
+import Helmet from 'react-helmet';
 import {
   checkValidOnBlur,
   setFirstChildElementError,
@@ -195,6 +196,11 @@ export class Page extends Component {
 
     return (
       <div className='page'>
+        <Helmet
+          title="Udacity Event Planner"
+          meta={[
+              {property: 'og:title', content: 'Home'},
+          ]} />
         <style scoped type='text/css'>{styles}</style>
         <ul className='navbar'>
           {showNavMessage}
