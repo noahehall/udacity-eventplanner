@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
-import { checkValidOnBlur, setFirstChildElementError } from '../../lib/dom';
+import {
+  checkValidOnBlur,
+  setFirstChildElementError,
+  clearFirstChildElementError,
+} from '../../lib/dom';
 
 import './page.css';
 export class Page extends Component {
@@ -55,6 +59,9 @@ export class Page extends Component {
     e.preventDefault();
     e.stopPropagation();
 
+    // on form submission
+    if (!e.currentTarget.checkValidity()) return setFirstChildElementError(e.currentTarget, 'Form is invalid. Please review all errors');
+
     const
       email = e.currentTarget.email.value,
       name = e.currentTarget.name.value,
@@ -65,13 +72,18 @@ export class Page extends Component {
 
     this.setState({loggedIn: true, user: userInfo });
     localStorage.setItem('user', JSON.stringify(userInfo));
+    clearFirstChildElementError(e.currentTarget);
     e.currentTarget.reset();
-    this.closeModal();
+
+    return this.closeModal();
   }
 
   handleLoginSubmit = (e) => {
     e.preventDefault();
     e.stopPropagation();
+
+    // on form submission
+    if (!e.currentTarget.checkValidity()) return setFirstChildElementError(e.currentTarget, 'Form is invalid. Please review all errors');
 
     const
       email = e.currentTarget.email.value,
@@ -80,8 +92,13 @@ export class Page extends Component {
     if (this.state.user.password === password && this.state.user.email === email) {
       this.setState({loggedIn: true });
       e.currentTarget.reset();
-      this.closeModal();
-    } else setFirstChildElementError(e.currentTarget);
+      clearFirstChildElementError(e.currentTarget);
+
+      return this.closeModal();
+    }
+
+    //incorrect login information
+    return setFirstChildElementError(e.currentTarget, 'Incorrect login information');
   }
 
   getSignupForm = () =>
@@ -132,7 +149,7 @@ export class Page extends Component {
         />
       </section>
       <section>
-        <input type='submit' />
+        <input type='submit' value='submit' />
       </section>
     </form>;
 
@@ -165,7 +182,7 @@ export class Page extends Component {
         />
       </section>
       <section>
-        <input type='submit' />
+        <input type='submit' value='submit' />
       </section>
     </form>;
 
