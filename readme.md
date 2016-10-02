@@ -1,6 +1,7 @@
 # Why are we here?
 Welcome to @noahedwardhall's Udacity Event Planner
 
+This application is based on [this boilerplate project](https://github.com/noahehall/react-f-your-starterkit.git)
 # Quick start
   - $ npm install #install all required npm modules
   - $ npm run start #start app on localhost:3000
