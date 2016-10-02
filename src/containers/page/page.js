@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
-import { checkValidOnBlur } from '../../lib/dom';
+import { checkValidOnBlur, setFirstChildElementError } from '../../lib/dom';
 
 import './page.css';
 export class Page extends Component {
@@ -81,7 +81,7 @@ export class Page extends Component {
       this.setState({loggedIn: true });
       e.currentTarget.reset();
       this.closeModal();
-    } else console.log('incorrect user', this.state.user);
+    } else setFirstChildElementError(e.currentTarget);
   }
 
   getSignupForm = () =>
@@ -89,44 +89,45 @@ export class Page extends Component {
       <h2>
         Signup to U.E.P
       </h2>
-      <div>
-        <section className='no-error'>Error! here is the message</section>
-        <section>
-          <label htmlFor='name'>name:
-          </label>
-          <input
-            id='name'
-            maxLength={30}
-            minLength={2}
-            pattern='[A-Za-z]{2,30}'
-            placeholder='Your Name'
-            required
-            title='at least two (to 30) letters'
-            type='text'
-          />
-        </section>
-      </div>
       <section>
-        <label htmlFor='email'>email:
+        <label htmlFor='name'>Username<span className='error' />
+        </label>
+        <input
+          autoFocus
+          id='name'
+          maxLength={30}
+          minLength={2}
+          onBlur={(e) => checkValidOnBlur(e, true)}
+          pattern='^[A-Za-z]+$'
+          placeholder='Your Name'
+          required
+          title='at least two (to 30) letters no spaces'
+          type='text'
+        />
+      </section>
+      <section>
+        <label htmlFor='email'>email<span className='error' />
         </label>
         <input
           id='email'
+          onBlur={(e) => checkValidOnBlur(e, true)}
           placeholder='Enter your email address'
           required
           type='email'
         />
       </section>
       <section>
-        <label htmlFor='password'>password:
+        <label htmlFor='password'>password<span className='error' />
         </label>
         <input
           id='password'
           maxLength={15}
-          minLength={4}
-          pattern='^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,15}$'
+          minLength={3}
+          onBlur={(e) => checkValidOnBlur(e, true)}
+          pattern='^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{3,15}$'
           placeholder='Choose a password'
           required
-          title='min length 4, max 15, at least one upper case letter, one lower case letter, and one numeric digit.'
+          title='min length 3, max 15, at least one upper case letter, one lower case letter, and one numeric digit.'
           type='password'
         />
       </section>
@@ -140,22 +141,24 @@ export class Page extends Component {
       <h2>
       Login to U.E.P
       </h2>
+      <span className='error' />
       <section>
-        <label htmlFor='email'>email:
+        <label htmlFor='email'>email<span className='error' />
         </label>
         <input
-          autoFocus
           id='email'
+          onBlur={(e) => checkValidOnBlur(e, true)}
           placeholder='Enter your email address'
           required
           type='email'
         />
       </section>
       <section>
-        <label htmlFor='password'>password:
+        <label htmlFor='password'>password<span className='error' />
         </label>
         <input
           id='password'
+          onBlur={(e) => checkValidOnBlur(e, true)}
           placeholder='Choose a password'
           required
           type='password'

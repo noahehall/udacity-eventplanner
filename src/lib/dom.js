@@ -4,6 +4,12 @@ export const setPreviousElementError = (el) =>
 export const clearPreviousElementError = (el) =>
   el.previousSibling.firstElementChild.innerHTML = el.validationMessage;
 
+export const setFirstChildElementError = (el) => {
+  const thisEl = el.querySelector('.error');
+  console.log(thisEl);
+  thisEl.innerHTML = 'invalid login';
+};
+
 export const checkValidOnBlur = (e, setError = false) => {
   const el = e.currentTarget;
   if (el.willValidate && !el.validity.valid) {
