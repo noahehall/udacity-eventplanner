@@ -31,8 +31,31 @@ class Main extends Component {
   }
 
   checkValidOnBlur = (e) => {
-    console.log(e.currentTarget);
+    const el = e.currentTarget;
+    // for some reason the pattern is not passing
+    if (el && el.willValidate && !el.checkValidity()) {
+      // el.setCustomValidity(el.validationMessage);
+      el.title = el.validationMessage;
+      el.className = 'has-error';
+    } else {
+      el.setCustomValidity('');
+      el.className = '';
+      el.title = '';
+    }
   }
+
+  hasError = (el) => !el ||
+    el.valueMissing ||
+    el.typeMismatch ||
+    el.patternMismatch ||
+    el.tooLong ||
+    el.tooShort ||
+    el.rangeUnderflow ||
+    el.rangeOverflow ||
+    el.stepMismatch ||
+    el.badInput ||
+    !el.valid;
+
   getCreateEventForm = () =>
     <div className='main'>
       <form id='eventcreate-form' onSubmit={this.handleCreateEventSubmission} >
@@ -46,10 +69,12 @@ class Main extends Component {
             </label>
             <input
               id='eventname'
+              // minLength={4}
               onBlur={this.checkValidOnBlur}
+              pattern='[A-Za-z]{3}'
               placeholder='Name of your event'
               required
-              title='Give your event a memorable name'
+              title='Give your event a memorable name with atleast four characters'
               type='text'
             />
           </section>
@@ -208,7 +233,7 @@ class Main extends Component {
         </section>
       </article>
     ).reverse() :
-    'You have no saved events';
+      <article>You have no saved events</article>;
   };
 
   deleteEvent = (id) => {
@@ -224,10 +249,11 @@ class Main extends Component {
   }
 
   render() {
-    const view = !this.context.loggedIn ? this.getCreateEventForm() : this.getNewUserWelcome();
-    const eventsDisplayed = this.state.hasEvents && this.context.loggedIn ?
-      this.displayCreatedEvents() :
-      null;
+    const
+      eventsDisplayed = this.state.hasEvents && this.context.loggedIn ?
+        this.displayCreatedEvents() :
+        null,
+      view = !this.context.loggedIn ? this.getCreateEventForm() : this.getNewUserWelcome();
 
     return (
       <div>
