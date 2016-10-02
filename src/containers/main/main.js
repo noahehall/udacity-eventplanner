@@ -55,10 +55,10 @@ class Main extends Component {
             maxLength={20}
             minLength={2}
             onBlur={this.checkValidOnBlur}
-            pattern='\w+'
+            pattern='(?:\w+\s*)+\s*\w+'
             placeholder='Name of your event'
             required
-            title='Give your event a memorable name between two and twenty characters'
+            title='Give your event a memorable name between two and twenty characters. no leading or trailing spaces'
             type='text'
           />
         </section>
