@@ -197,10 +197,12 @@ export class Page extends Component {
     return (
       <div className='page'>
         <Helmet
-          title="Udacity Event Planner"
           meta={[
-              {property: 'og:title', content: 'Home'},
-          ]} />
+            {content: "Udacity Event Planner by @noahedwardhall", name: "description"},
+            {content: 'Home', property: 'og:title'},
+          ]}
+          title='Udacity Event Planner'
+        />
         <style scoped type='text/css'>{styles}</style>
         <ul className='navbar'>
           {showNavMessage}

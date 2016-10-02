@@ -16,17 +16,13 @@ import configure from './store/configure';
 function renderFullPage(html, preloadedState) {
   const head = Helmet.rewind();
 
-/*
-<meta http-equiv="x-ua-compatible" content="ie=edge">
-<meta name="description" content="">
-<meta name="viewport" content="width=device-width, initial-scale=1">
- */
-
   return `
     <!doctype html>
     <html class="no-js" lang="">
       <head>
         <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         ${head.title}
         ${head.meta}
         ${head.link}
