@@ -32,29 +32,28 @@ class Main extends Component {
 
   checkValidOnBlur = (e) => {
     const el = e.currentTarget;
-    // for some reason the pattern is not passing
-    if (el && el.willValidate && !el.checkValidity()) {
+    if (el && el.willValidate && !el.validity.valid) {
       // el.setCustomValidity(el.validationMessage);
-      el.title = el.validationMessage;
+      // el.title = el.validationMessage;
       el.className = 'has-error';
     } else {
       el.setCustomValidity('');
       el.className = '';
-      el.title = '';
+      // el.title = '';
     }
   }
 
   hasError = (el) => !el ||
-    el.valueMissing ||
-    el.typeMismatch ||
-    el.patternMismatch ||
-    el.tooLong ||
-    el.tooShort ||
-    el.rangeUnderflow ||
-    el.rangeOverflow ||
-    el.stepMismatch ||
-    el.badInput ||
-    !el.valid;
+    el.validity.valueMissing ||
+    el.validity.typeMismatch ||
+    el.validity.patternMismatch ||
+    el.validity.tooLong ||
+    el.validity.tooShort ||
+    el.validity.rangeUnderflow ||
+    el.validity.rangeOverflow ||
+    el.validity.stepMismatch ||
+    el.validity.badInput ||
+    !el.validity.valid;
 
   getCreateEventForm = () =>
     <div className='main'>
@@ -69,9 +68,9 @@ class Main extends Component {
             </label>
             <input
               id='eventname'
-              // minLength={4}
+              //minLength={4}
               onBlur={this.checkValidOnBlur}
-              pattern='[A-Za-z]{3}'
+              pattern='\w{3}'
               placeholder='Name of your event'
               required
               title='Give your event a memorable name with atleast four characters'
