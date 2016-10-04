@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const setPreviousElementError = (el) =>
   el.previousSibling.firstElementChild.innerHTML = `${el.validationMessage}<br />${el.title}`;
 
@@ -16,6 +18,20 @@ export const clearFirstChildElementError = (el, msg = false) => {
 
 export const checkValidOnBlur = (e, setError = false) => {
   const el = e.currentTarget;
+
+  // check eventstart && end > now
+  if ((el.id === 'eventstart'|| el.id === 'eventend') && moment(el.value) < moment()) {
+    el.className = 'has-error';
+    el.setCustomValidity('date must be in the future');
+
+    return setPreviousElementError(el);
+  } else if (el.id === 'eventstart'|| el.id === 'eventend') {
+    el.className = '';
+    el.setCustomValidity('');
+    clearPreviousElementError(el);
+  }
+
+  // default check for validation
   if (el.willValidate && !el.validity.valid) {
     el.className = 'has-error';
     if (setError) setPreviousElementError(el);
