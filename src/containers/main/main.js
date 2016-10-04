@@ -75,7 +75,7 @@ class Main extends Component {
             onBlur={(e) => checkValidOnBlur(e, true)}
             placeholder='Date and time the event starts'
             required
-            type='date'
+            type='datetime-local'
           />
         </section>
         <section>
@@ -86,7 +86,7 @@ class Main extends Component {
             onBlur={(e) => checkValidOnBlur(e, true)}
             placeholder='Date and time the event ends'
             required
-            type='date'
+            type='datetime-local'
           />
         </section>
         <section>
