@@ -29,8 +29,11 @@ export class Page extends Component {
       loggedIn: false,
       modalIsOpen: false,
       user: {
+        birthday: '',
         email: '',
+        employer: '',
         name: '',
+        occupation: '',
         password: '',
       },
     };
@@ -65,12 +68,15 @@ export class Page extends Component {
     if (!e.currentTarget.checkValidity()) return setFirstChildElementError(e.currentTarget, 'Form is invalid. Please review all errors');
 
     const
+      birthday = e.currentTarget.birthday.value,
       email = e.currentTarget.email.value,
+      employer = e.currentTarget.employer.value,
       name = e.currentTarget.name.value,
+      occupation = e.currentTarget.occupation.value,
       password = e.currentTarget.password.value;
 
     const
-      userInfo = { email, name, password };
+      userInfo = { birthday, email, employer, name, occupation, password };
 
     this.setState({loggedIn: true, user: userInfo });
     localStorage.setItem('user', JSON.stringify(userInfo));
@@ -85,7 +91,8 @@ export class Page extends Component {
     e.stopPropagation();
 
     // on form submission
-    if (!e.currentTarget.checkValidity()) return setFirstChildElementError(e.currentTarget, 'Form is invalid. Please review all errors');
+    if (!e.currentTarget.checkValidity())
+      return setFirstChildElementError(e.currentTarget, 'Form is invalid. Please review all errors');
 
     const
       email = e.currentTarget.email.value,
@@ -148,6 +155,33 @@ export class Page extends Component {
           required
           title='min length 3, max 15, at least one upper case letter, one lower case letter, and one numeric digit.'
           type='password'
+        />
+      </section>
+      <section>
+        <label htmlFor='name'>Employer<span className='error' />
+        </label>
+        <input
+          id='employer'
+          placeholder='What company do you work for?'
+          type='text'
+        />
+      </section>
+      <section>
+        <label htmlFor='name'>Occupation<span className='error' />
+        </label>
+        <input
+          id='occupation'
+          placeholder='What is your job title?'
+          type='text'
+        />
+      </section>
+      <section>
+        <label htmlFor='name'>Birthday<span className='error' />
+        </label>
+        <input
+          id='birthday'
+          placeholder='When were you born?'
+          type='date'
         />
       </section>
       <section>
