@@ -214,7 +214,7 @@ class Main extends Component {
       eventsDisplayed = this.state.hasEvents && this.context.loggedIn ?
         this.displayCreatedEvents() :
         null,
-      view = this.context.loggedIn ? this.getCreateEventForm() : this.getNewUserWelcome();
+      view = !this.context.loggedIn ? this.getCreateEventForm() : this.getNewUserWelcome();
 
     return (
       <div>
