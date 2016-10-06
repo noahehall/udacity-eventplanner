@@ -46,8 +46,8 @@ export const checkValidOnBlur = (e, setError = false) => {
 
       try {
         const hasError = otherEl.id === 'eventstart' ?
-          moment(el.value) < moment(otherEl.value) :
-          moment(el.value) > moment(otherEl.value);
+          moment(el.value) <= moment(otherEl.value) :
+          moment(el.value) >= moment(otherEl.value);
 
         if (hasError) {
           el.className = 'has-error';
