@@ -60,6 +60,7 @@ export const checkValidOnBlur = (e, setError = false) => {
       }
     }
 
+    //clear all errors
     el.className = '';
     el.setCustomValidity('');
     clearPreviousElementError(el);
