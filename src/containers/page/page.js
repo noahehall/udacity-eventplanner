@@ -3,8 +3,9 @@ import Modal from 'react-modal';
 import Helmet from 'react-helmet';
 import {
   checkValidOnBlur,
-  setFirstChildElementError,
   clearFirstChildElementError,
+  disableConstraintPopup,
+  setFirstChildElementError,
 } from '../../lib/dom';
 
 import styles from './page.css';
@@ -57,6 +58,8 @@ export class Page extends Component {
   };
 
   afterOpenModal = () => {
+    disableConstraintPopup(document.querySelector('#signup-form'));
+    disableConstraintPopup(document.querySelector('#login-form'));
     document.querySelector('#name').focus();
   };
 

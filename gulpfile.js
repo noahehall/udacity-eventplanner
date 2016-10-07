@@ -9,8 +9,8 @@ const
   eslint = require('gulp-eslint'),
   gstylelint = require('gulp-stylelint'),
   gulp = require("gulp"),
-  gulpif = require('gulp-if'),
   gulpSequence = require('gulp-sequence'),
+  gulpif = require('gulp-if'),
   gutil = require("gulp-util"),
   lrload = require("livereactload"),
   mocha = require('gulp-spawn-mocha'),
@@ -172,9 +172,9 @@ gulp.task("default", gulpSequence(
     'stylelint',
     'eslint',
     'test',
-    'transpile:server',
-    "watch:js",
-    "watch:server"
+    //'transpile:server',
+    "watch:server",
+    "watch:js"
 ));
 
 gulp.task("prod", gulpSequence(

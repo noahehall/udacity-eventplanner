@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { checkValidOnBlur } from '../../lib/dom';
+import { checkValidOnBlur, disableConstraintPopup } from '../../lib/dom';
 
 import styles from './main.css';
 
@@ -19,9 +19,11 @@ class Main extends Component {
 
   componentDidMount() {
     this.parseLocalStorageEvents();
+    disableConstraintPopup(document.querySelector('#eventcreate-form'));
   }
 
   componentDidUpdate() {
+    disableConstraintPopup(document.querySelector('#eventcreate-form'));
     if (this.context.loggedIn) setTimeout(() => {
       document.querySelector('#eventname').focus();
     }, 200);
@@ -103,8 +105,9 @@ class Main extends Component {
             maxLength={100}
             minLength={2}
             onBlur={(e) => checkValidOnBlur(e, true)}
-            placeholder='Location (and directions) to event'
+            placeholder='Location (and directions) for event'
             required
+            title='Please enter the address of the event'
           />
         </section>
         <section>
@@ -229,7 +232,7 @@ class Main extends Component {
       eventsDisplayed = this.state.hasEvents && this.context.loggedIn ?
         this.displayCreatedEvents() :
         null,
-      view = !this.context.loggedIn ? this.getCreateEventForm() : this.getNewUserWelcome();
+      view = this.context.loggedIn ? this.getCreateEventForm() : this.getNewUserWelcome();
 
     return (
       <div>

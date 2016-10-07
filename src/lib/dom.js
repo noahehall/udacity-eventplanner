@@ -1,5 +1,9 @@
 import moment from 'moment';
 
+export const disableConstraintPopup = (form) =>
+  form && form.addEventListener('invalid', (e) =>
+    e.preventDefault(), true);
+
 export const getParent = (el, value) => {
   const found = document.querySelector(value);
 
