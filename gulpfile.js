@@ -17,6 +17,7 @@ const
   postCss = require('browserify-postcss'),
   reporter = require('postcss-reporter'),
   source = require("vinyl-source-stream"),
+  uglify = require('gulp-uglify'),
   watchify = require("watchify");
 
 const isProd = process.env.NODE_ENV === "production";
@@ -70,6 +71,8 @@ gulp.task('transpile:server', () => {
     .bundle()
     .on("error", gutil.log)
     .pipe(source('server.js'))
+    .pipe(buffer())
+    .pipe(uglify())
     .pipe(gulp.dest('./dist'));
 });
 
@@ -80,6 +83,8 @@ gulp.task("bundle:js", () => {
     .bundle()
     .on("error", gutil.log)
     .pipe(source("bundle.js"))
+    .pipe(buffer())
+    .pipe(uglify())
     .pipe(gulp.dest("./dist/public/js"));
 });
 
@@ -93,6 +98,7 @@ gulp.task("watch:js", () => {
       .on("error", gutil.log)
       .pipe(source("bundle.js"))
       .pipe(buffer())
+      .pipe(uglify())
       .pipe(gulp.dest("./dist/public/js"));
   }
   // start JS file watching and rebundling with watchify
