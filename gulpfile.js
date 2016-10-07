@@ -9,6 +9,7 @@ const
   eslint = require('gulp-eslint'),
   gstylelint = require('gulp-stylelint'),
   gulp = require("gulp"),
+  gulpif = require('gulp-if'),
   gulpSequence = require('gulp-sequence'),
   gutil = require("gulp-util"),
   lrload = require("livereactload"),
@@ -85,7 +86,7 @@ gulp.task("bundle:js", () => {
     .on("error", gutil.log)
     .pipe(source("bundle.js"))
     .pipe(buffer())
-    .pipe(uglify())
+    .pipe(gulpif(isProd, uglify()))
     .pipe(gulp.dest("./dist/public/js"));
 });
 
@@ -99,9 +100,9 @@ gulp.task("watch:js", () => {
       .on("error", gutil.log)
       .pipe(source("bundle.js"))
       .pipe(buffer())
-      .pipe(sourcemaps.init())
+      .pipe(gulpif(!isProd, sourcemaps.init()))
       .pipe(uglify())
-      .pipe(sourcemaps.write('./'))
+      .pipe(gulpif(!isProd, sourcemaps.write('./')))
       .pipe(gulp.dest("./dist/public/js"));
   }
   // start JS file watching and rebundling with watchify
@@ -174,4 +175,12 @@ gulp.task("default", gulpSequence(
     'transpile:server',
     "watch:js",
     "watch:server"
+));
+
+gulp.task("prod", gulpSequence(
+    'stylelint',
+    'eslint',
+    'test',
+    'transpile:server',
+    'bundle:js'
 ));
