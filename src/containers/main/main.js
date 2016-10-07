@@ -21,6 +21,12 @@ class Main extends Component {
     this.parseLocalStorageEvents();
   }
 
+  componentDidUpdate() {
+    if (this.context.loggedIn) setTimeout(() => {
+      document.querySelector('#eventname').focus();
+    }, 200);
+  }
+
   parseLocalStorageEvents = () => {
     if (typeof window !== 'undefined' && localStorage) {
       const events = localStorage.getItem('events');
@@ -214,7 +220,7 @@ class Main extends Component {
       eventsDisplayed = this.state.hasEvents && this.context.loggedIn ?
         this.displayCreatedEvents() :
         null,
-      view = !this.context.loggedIn ? this.getCreateEventForm() : this.getNewUserWelcome();
+      view = this.context.loggedIn ? this.getCreateEventForm() : this.getNewUserWelcome();
 
     return (
       <div>

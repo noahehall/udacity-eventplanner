@@ -56,7 +56,9 @@ export class Page extends Component {
     else this.setState({modalIsOpen: true});
   };
 
-  // afterOpenModal = () => this.refs.subtitle.style.color = '#f00';
+  afterOpenModal = () => {
+    document.querySelector('#name').focus();
+  };
 
   closeModal = () => this.setState({modalIsOpen: false});
 
@@ -119,7 +121,6 @@ export class Page extends Component {
         <label htmlFor='name'>Username<span className='error' />
         </label>
         <input
-          autoFocus
           id='name'
           maxLength={30}
           minLength={2}

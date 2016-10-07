@@ -1,13 +1,9 @@
 import moment from 'moment';
 
-export const getParent = (el, value, type) => {
-  switch (type) {
-  case 'id':
-    return document.querySelector(`#${value}`);
-  case 'class':
-  case 'attribute':
-  default: return null;
-  }
+export const getParent = (el, value) => {
+  const found = document.querySelector(value);
+
+  return found || null;
 };
 
 export const setPreviousElementError = (el) =>
@@ -30,7 +26,7 @@ export const checkValidOnBlur = (e, setError = false) => {
   const el = e.currentTarget;
 
   if (el.id === 'eventstart'|| el.id === 'eventend') {
-    const form = getParent(e.currentTarget, 'eventcreate-form', 'id');
+    const form = getParent(e.currentTarget, '#eventcreate-form');
 
     // check eventstart && end > now
     if ( moment(el.value) < moment() ) {
@@ -41,8 +37,7 @@ export const checkValidOnBlur = (e, setError = false) => {
 
     // check if eventstart < eventend
     } else if (form) {
-      const otherElId = el.id === 'eventstart' ? 'eventend' : 'eventstart';
-      const otherEl = form.querySelector(`#${otherElId}`);
+      const otherEl = form.querySelector(`#${el.id === 'eventstart' ? 'eventend' : 'eventstart'}`);
 
       try {
         const hasError = otherEl.id === 'eventstart' ?
