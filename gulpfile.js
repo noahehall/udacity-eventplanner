@@ -4,7 +4,7 @@ require('babel-core/register');
 const
   babelify = require("babelify"),
   browserify = require("browserify"),
-  buffer = require("vinyl-buffer"),
+  buffer = require("vinyl-buffer"), // <----- convert from streaming to buffered vinyl file object
   envify = require("envify"),
   eslint = require('gulp-eslint'),
   gstylelint = require('gulp-stylelint'),
@@ -17,7 +17,8 @@ const
   postCss = require('browserify-postcss'),
   reporter = require('postcss-reporter'),
   source = require("vinyl-source-stream"),
-  uglify = require('gulp-uglify'),
+  sourcemaps = require('gulp-sourcemaps'),
+  uglify = require('gulp-uglify'), // check https://github.com/ben-ng/minifyify
   watchify = require("watchify");
 
 const isProd = process.env.NODE_ENV === "production";
@@ -34,7 +35,7 @@ function createBundler(useWatchify, server) {
     entries: [`src/${server ? 'server' : 'client'}.js`],
     fullPaths: !isProd,
     packageCache: {},
-    plugin: isProd || !useWatchify ? [] : [lrload],
+    plugin: isProd || !useWatchify ? []: [lrload],
     transform: [
       [postCss, {
         extensions: ['.css', '.scss'],
@@ -98,7 +99,9 @@ gulp.task("watch:js", () => {
       .on("error", gutil.log)
       .pipe(source("bundle.js"))
       .pipe(buffer())
+      .pipe(sourcemaps.init())
       .pipe(uglify())
+      .pipe(sourcemaps.write('./'))
       .pipe(gulp.dest("./dist/public/js"));
   }
   // start JS file watching and rebundling with watchify
