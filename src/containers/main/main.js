@@ -100,7 +100,7 @@ class Main extends Component {
           </label>
           <textarea
             id='location'
-            maxLength={20}
+            maxLength={100}
             minLength={2}
             onBlur={(e) => checkValidOnBlur(e, true)}
             placeholder='Location (and directions) to event'
@@ -113,7 +113,9 @@ class Main extends Component {
           <input
             id='eventtype'
             list='eventtypelist'
+            onBlur={(e) => checkValidOnBlur(e, true)}
             placeholder='Type of event'
+            required
             type='text'
           />
           <datalist id='eventtypelist'>
@@ -126,9 +128,16 @@ class Main extends Component {
           </datalist>
         </section>
         <section>
-          <label htmlFor='guestlist'>Guest list
+          <label htmlFor='guestlist'>Guest list<span className='error' />
           </label>
-          <textarea id='guestlist' placeholder='Enter one name per line' />
+          <textarea
+            id='guestlist'
+            minLength={1}
+            onBlur={(e) => checkValidOnBlur(e, true)}
+            placeholder='Enter one name per line'
+            required
+            title='Enter recipients, one name per line'
+          />
         </section>
         <section>
           <label htmlFor='message'>Message<span className='error' />
@@ -220,7 +229,7 @@ class Main extends Component {
       eventsDisplayed = this.state.hasEvents && this.context.loggedIn ?
         this.displayCreatedEvents() :
         null,
-      view = this.context.loggedIn ? this.getCreateEventForm() : this.getNewUserWelcome();
+      view = !this.context.loggedIn ? this.getCreateEventForm() : this.getNewUserWelcome();
 
     return (
       <div>
