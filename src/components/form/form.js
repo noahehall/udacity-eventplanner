@@ -142,7 +142,7 @@ export const getCreateEventForm = (handleCreateEventSubmission) =>
         <textarea id='message' placeholder='Optional message to the guests with additional information about the event' />
       </section>
       <section>
-        <input type='submit' />
+        <input disabled id='eventcreate-form-submit' name='submit' type='submit' value='submit' />
       </section>
     </form>
   </div>;
@@ -236,7 +236,7 @@ export const getSignupForm = (handleSignupSubmit) =>
         />
       </section>
       <section>
-        <input type='submit' value='submit' />
+        <input disabled id='signup-form-submit' name='submit' type='submit' value='submit' />
       </section>
     </form>
   </div>;
@@ -281,7 +281,7 @@ export const getLoginForm = (handleLoginSubmit) =>
         />
       </section>
       <section>
-        <input type='submit' value='submit' />
+        <input disabled id='login-form-submit' name='submit' type='submit' value='submit' />
       </section>
     </form>
   </div>;

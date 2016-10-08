@@ -15,6 +15,7 @@ export const setPreviousElementError = (el) => {
     progressEl = document.querySelector(`#${el.dataset.progressid}`),
     progressStatus = Number(el.dataset.progress);
 
+  el.form.submit.disabled = true;
   if (progressStatus === 1) {
     el.dataset.progress = -1;
     progressEl.value -= 10;
@@ -25,9 +26,11 @@ export const setPreviousElementError = (el) => {
 
 export const clearPreviousElementError = (el) => {
   const
+    form = el.form,
     progressEl = document.querySelector(`#${el.dataset.progressid}`),
     progressStatus = Number(el.dataset.progress);
 
+  if (form.checkValidity()) form.submit.disabled = false;
   if (progressStatus !== 1) {
     el.dataset.progress = 1;
     progressEl.value += 10;
