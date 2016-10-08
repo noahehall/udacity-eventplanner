@@ -10,11 +10,31 @@ export const getParent = (el, value) => {
   return found || null;
 };
 
-export const setPreviousElementError = (el) =>
-  el.previousSibling.firstElementChild.innerHTML = `${el.validationMessage}<br />${el.title}`;
+export const setPreviousElementError = (el) => {
+  const
+    progressEl = document.querySelector(`#${el.dataset.progressid}`),
+    progressStatus = Number(el.dataset.progress);
 
-export const clearPreviousElementError = (el) =>
-  el.previousSibling.firstElementChild.innerHTML = el.validationMessage;
+  if (progressStatus === 1) {
+    el.dataset.progress = -1;
+    progressEl.value -= 10;
+  } else if (progressStatus === 0) el.dataset.progress = -1;
+
+  return el.previousSibling.firstElementChild.innerHTML = `${el.validationMessage}<br />${el.title}`;
+};
+
+export const clearPreviousElementError = (el) => {
+  const
+    progressEl = document.querySelector(`#${el.dataset.progressid}`),
+    progressStatus = Number(el.dataset.progress);
+
+  if (progressStatus !== 1) {
+    el.dataset.progress = 1;
+    progressEl.value += 10;
+  }
+
+  return el.previousSibling.firstElementChild.innerHTML = el.validationMessage;
+};
 
 export const setFirstChildElementError = (el, msg = false) => {
   const thisEl = el.querySelector('.error');

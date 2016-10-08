@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { checkValidOnEvent, disableConstraintPopup } from '../../lib/dom';
+import Form from '../../components/form/form.js';
+import { disableConstraintPopup } from '../../lib/dom';
 
 import styles from './main.css';
 
-class Main extends Component {
+export default class Main extends Component {
   static contextTypes = {
     loggedIn: React.PropTypes.bool.isRequired,
   }
@@ -38,124 +39,6 @@ class Main extends Component {
       });
     }
   }
-
-  getCreateEventForm = () =>
-    <div className='main'>
-      <form id='eventcreate-form' onSubmit={this.handleCreateEventSubmission} >
-        <h2>
-          Create an event
-        </h2>
-        <section>
-          <label htmlFor='eventname'>Event Name<span className='error' />
-          </label>
-          <input
-            id='eventname'
-            maxLength={20}
-            minLength={2}
-            onInput={(e) => checkValidOnEvent(e, true)}
-            pattern='(?:\w+\s*)+\s*\w+'
-            placeholder='Name of your event'
-            required
-            title='Give your event a memorable name between two and twenty characters. no leading or trailing spaces'
-            type='text'
-          />
-        </section>
-        <section>
-          <label htmlFor='eventhostname'>Event Host Name<span className='error' />
-          </label>
-          <input
-            id='eventhostname'
-            maxLength={20}
-            minLength={2}
-            onInput={(e) => checkValidOnEvent(e, true)}
-            pattern='(?:\w+\s*)+\s*\w+'
-            placeholder='Person or Organization hosting the event'
-            required
-            title='Enter between two and twenty characters'
-            type='text'
-          />
-        </section>
-        <section>
-          <label htmlFor='eventstart'>Starts<span className='error' />
-          </label>
-          <input
-            id='eventstart'
-            onInput={(e) => checkValidOnEvent(e, true)}
-            placeholder='Date and time the event starts'
-            required
-            type='datetime-local'
-          />
-        </section>
-        <section>
-          <label htmlFor='eventend'>Ends<span className='error' />
-          </label>
-          <input
-            id='eventend'
-            onInput={(e) => checkValidOnEvent(e, true)}
-            placeholder='Date and time the event ends'
-            required
-            type='datetime-local'
-          />
-        </section>
-        <section>
-          <label htmlFor='location'>Location<span className='error' />
-          </label>
-          <textarea
-            id='location'
-            maxLength={100}
-            minLength={2}
-            onInput={(e) => checkValidOnEvent(e, true)}
-            placeholder='Location (and directions) for event'
-            required
-            title='Please enter the address of the event'
-          />
-        </section>
-        <section>
-          <label htmlFor='eventtype'>Event Type<span className='error' />
-          </label>
-          <input
-            id='eventtype'
-            list='eventtypelist'
-            onInput={(e) => checkValidOnEvent(e, true)}
-            placeholder='Type of event'
-            required
-            type='text'
-          />
-          <datalist id='eventtypelist'>
-            <select>
-              <option value='birthday'>Birthday Party</option>
-              <option value='conference'>Conference</option>
-              <option value='wedding'>Wedding</option>
-              <option value='other' >Other</option>
-            </select>
-          </datalist>
-        </section>
-        <section>
-          <label htmlFor='guestlist'>Guest list<span className='error' />
-          </label>
-          <textarea
-            id='guestlist'
-            minLength={1}
-            onInput={(e) => checkValidOnEvent(e, true)}
-            placeholder='Enter one name per line'
-            required
-            title='Enter recipients, one name per line'
-          />
-        </section>
-        <section>
-          <label htmlFor='message'>Message<span className='error' />
-          </label>
-          <textarea id='message' placeholder='Optional message to the guests with additional information about the event' />
-        </section>
-        <section>
-          <input type='submit' />
-        </section>
-      </form>
-      <article>
-        <h1>Your Events</h1>
-
-      </article>
-    </div>;
 
   getNewUserWelcome = () =>
     <section>
@@ -193,6 +76,7 @@ class Main extends Component {
       'events',
       JSON.stringify([...this.state.events, eventInfo]
     ));
+    document.querySelector('#eventcreate-form-progress').value = 0;
     e.currentTarget.reset();
   }
 
@@ -232,7 +116,12 @@ class Main extends Component {
       eventsDisplayed = this.state.hasEvents && this.context.loggedIn ?
         this.displayCreatedEvents() :
         null,
-      view = this.context.loggedIn ? this.getCreateEventForm() : this.getNewUserWelcome();
+      view = this.context.loggedIn ?
+        Form({
+          handler: this.handleCreateEventSubmission,
+          type:'getCreateEventForm',
+        }) :
+        this.getNewUserWelcome();
 
     return (
       <div>
@@ -243,5 +132,3 @@ class Main extends Component {
     );
   }
 }
-
-export default Main;

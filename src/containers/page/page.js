@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
 import Helmet from 'react-helmet';
+import Form from '../../components/form/form.js';
 import {
-  checkValidOnEvent,
   clearFirstChildElementError,
   disableConstraintPopup,
   setFirstChildElementError,
@@ -20,7 +20,6 @@ export class Page extends Component {
   }
 
   static defaultProps = {
-
   }
 
   constructor(props) {
@@ -86,6 +85,7 @@ export class Page extends Component {
     this.setState({loggedIn: true, user: userInfo });
     localStorage.setItem('user', JSON.stringify(userInfo));
     clearFirstChildElementError(e.currentTarget);
+    document.querySelector('#signup-form-progress').value = 0;
     e.currentTarget.reset();
 
     return this.closeModal();
@@ -107,6 +107,7 @@ export class Page extends Component {
       this.setState({loggedIn: true });
       e.currentTarget.reset();
       clearFirstChildElementError(e.currentTarget);
+      document.querySelector('#login-form-progress').value = 0;
 
       return this.closeModal();
     }
@@ -114,117 +115,6 @@ export class Page extends Component {
     //incorrect login information
     return setFirstChildElementError(e.currentTarget, 'Incorrect login information');
   }
-
-  getSignupForm = () =>
-    <form id='signup-form' onSubmit={this.handleSignupSubmit} >
-      <h2>
-        Signup to U.E.P
-      </h2>
-      <section>
-        <label htmlFor='name'>Username<span className='error' />
-        </label>
-        <input
-          id='name'
-          maxLength={30}
-          minLength={2}
-          onInput={(e) => checkValidOnEvent(e, true)}
-          pattern='^[A-Za-z]+$'
-          placeholder='Your Name'
-          required
-          title='at least two (to 30) letters no spaces'
-          type='text'
-        />
-      </section>
-      <section>
-        <label htmlFor='email'>email<span className='error' />
-        </label>
-        <input
-          id='email'
-          onInput={(e) => checkValidOnEvent(e, true)}
-          placeholder='Enter your email address'
-          required
-          type='email'
-        />
-      </section>
-      <section>
-        <label htmlFor='password'>password<span className='error' />
-        </label>
-        <input
-          id='password'
-          maxLength={15}
-          minLength={3}
-          onInput={(e) => checkValidOnEvent(e, true)}
-          pattern='^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{3,15}$'
-          placeholder='Choose a password'
-          required
-          title='min length 3, max 15, at least one upper case letter, one lower case letter, and one numeric digit.'
-          type='password'
-        />
-      </section>
-      <section>
-        <label htmlFor='name'>Employer<span className='error' />
-        </label>
-        <input
-          id='employer'
-          placeholder='What company do you work for?'
-          type='text'
-        />
-      </section>
-      <section>
-        <label htmlFor='name'>Occupation<span className='error' />
-        </label>
-        <input
-          id='occupation'
-          placeholder='What is your job title?'
-          type='text'
-        />
-      </section>
-      <section>
-        <label htmlFor='name'>Birthday<span className='error' />
-        </label>
-        <input
-          id='birthday'
-          placeholder='When were you born?'
-          type='date'
-        />
-      </section>
-      <section>
-        <input type='submit' value='submit' />
-      </section>
-    </form>;
-
-  getLoginForm = () =>
-    <form autoComplete='on' id='login-form' onSubmit={this.handleLoginSubmit} >
-      <h2>
-      Login to U.E.P
-      </h2>
-      <span className='error' />
-      <section>
-        <label htmlFor='email'>email<span className='error' />
-        </label>
-        <input
-          id='email'
-          onInput={(e) => checkValidOnEvent(e, true)}
-          placeholder='Enter your email address'
-          required
-          type='email'
-        />
-      </section>
-      <section>
-        <label htmlFor='password'>password<span className='error' />
-        </label>
-        <input
-          id='password'
-          onInput={(e) => checkValidOnEvent(e, true)}
-          placeholder='Choose a password'
-          required
-          type='password'
-        />
-      </section>
-      <section>
-        <input type='submit' value='submit' />
-      </section>
-    </form>;
 
   render() {
     const showNavMessage =
@@ -256,8 +146,8 @@ export class Page extends Component {
             >
               <button className='close-modal' onClick={this.closeModal} >X</button>
               <h1>Udacity Event Planner</h1>
-              {this.getSignupForm()}
-              {this.getLoginForm()}
+              {Form({ handler: this.handleSignupSubmit, type: 'getSignupForm'})}
+              {Form({ handler: this.handleLoginSubmit, type: 'getLoginForm' })}
             </Modal>
           </li>
         </ul>

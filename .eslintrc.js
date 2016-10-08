@@ -372,7 +372,7 @@ module.exports = {
     "react/no-direct-mutation-state": 0,
     "react/no-find-dom-node": 2,
     "react/no-is-mounted": 2,
-    "react/no-multi-comp": 2,
+    "react/no-multi-comp": [2, { "ignoreStateless": true }],
     "react/no-render-return-value": 2,
     "react/no-set-state": 1,
     "react/no-string-refs": 0,
