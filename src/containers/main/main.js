@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { checkValidOnBlur, disableConstraintPopup } from '../../lib/dom';
+import { checkValidOnEvent, disableConstraintPopup } from '../../lib/dom';
 
 import styles from './main.css';
 
@@ -52,7 +52,7 @@ class Main extends Component {
             id='eventname'
             maxLength={20}
             minLength={2}
-            onBlur={(e) => checkValidOnBlur(e, true)}
+            onInput={(e) => checkValidOnEvent(e, true)}
             pattern='(?:\w+\s*)+\s*\w+'
             placeholder='Name of your event'
             required
@@ -67,7 +67,7 @@ class Main extends Component {
             id='eventhostname'
             maxLength={20}
             minLength={2}
-            onBlur={(e) => checkValidOnBlur(e, true)}
+            onInput={(e) => checkValidOnEvent(e, true)}
             pattern='(?:\w+\s*)+\s*\w+'
             placeholder='Person or Organization hosting the event'
             required
@@ -80,7 +80,7 @@ class Main extends Component {
           </label>
           <input
             id='eventstart'
-            onBlur={(e) => checkValidOnBlur(e, true)}
+            onInput={(e) => checkValidOnEvent(e, true)}
             placeholder='Date and time the event starts'
             required
             type='datetime-local'
@@ -91,7 +91,7 @@ class Main extends Component {
           </label>
           <input
             id='eventend'
-            onBlur={(e) => checkValidOnBlur(e, true)}
+            onInput={(e) => checkValidOnEvent(e, true)}
             placeholder='Date and time the event ends'
             required
             type='datetime-local'
@@ -104,7 +104,7 @@ class Main extends Component {
             id='location'
             maxLength={100}
             minLength={2}
-            onBlur={(e) => checkValidOnBlur(e, true)}
+            onInput={(e) => checkValidOnEvent(e, true)}
             placeholder='Location (and directions) for event'
             required
             title='Please enter the address of the event'
@@ -116,7 +116,7 @@ class Main extends Component {
           <input
             id='eventtype'
             list='eventtypelist'
-            onBlur={(e) => checkValidOnBlur(e, true)}
+            onInput={(e) => checkValidOnEvent(e, true)}
             placeholder='Type of event'
             required
             type='text'
@@ -136,7 +136,7 @@ class Main extends Component {
           <textarea
             id='guestlist'
             minLength={1}
-            onBlur={(e) => checkValidOnBlur(e, true)}
+            onInput={(e) => checkValidOnEvent(e, true)}
             placeholder='Enter one name per line'
             required
             title='Enter recipients, one name per line'

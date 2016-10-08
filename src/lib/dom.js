@@ -26,7 +26,7 @@ export const clearFirstChildElementError = (el, msg = false) => {
   thisEl.innerHTML = msg || '';
 };
 
-export const checkValidOnBlur = (e, setError = false) => {
+export const checkValidOnEvent = (e, setError = false) => {
   const el = e.currentTarget;
 
   if (el.id === 'eventstart'|| el.id === 'eventend') {

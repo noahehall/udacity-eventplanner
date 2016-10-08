@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Modal from 'react-modal';
 import Helmet from 'react-helmet';
 import {
-  checkValidOnBlur,
+  checkValidOnEvent,
   clearFirstChildElementError,
   disableConstraintPopup,
   setFirstChildElementError,
@@ -127,7 +127,7 @@ export class Page extends Component {
           id='name'
           maxLength={30}
           minLength={2}
-          onBlur={(e) => checkValidOnBlur(e, true)}
+          onInput={(e) => checkValidOnEvent(e, true)}
           pattern='^[A-Za-z]+$'
           placeholder='Your Name'
           required
@@ -140,7 +140,7 @@ export class Page extends Component {
         </label>
         <input
           id='email'
-          onBlur={(e) => checkValidOnBlur(e, true)}
+          onInput={(e) => checkValidOnEvent(e, true)}
           placeholder='Enter your email address'
           required
           type='email'
@@ -153,7 +153,7 @@ export class Page extends Component {
           id='password'
           maxLength={15}
           minLength={3}
-          onBlur={(e) => checkValidOnBlur(e, true)}
+          onInput={(e) => checkValidOnEvent(e, true)}
           pattern='^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{3,15}$'
           placeholder='Choose a password'
           required
@@ -204,7 +204,7 @@ export class Page extends Component {
         </label>
         <input
           id='email'
-          onBlur={(e) => checkValidOnBlur(e, true)}
+          onInput={(e) => checkValidOnEvent(e, true)}
           placeholder='Enter your email address'
           required
           type='email'
@@ -215,7 +215,7 @@ export class Page extends Component {
         </label>
         <input
           id='password'
-          onBlur={(e) => checkValidOnBlur(e, true)}
+          onInput={(e) => checkValidOnEvent(e, true)}
           placeholder='Choose a password'
           required
           type='password'
