@@ -100,8 +100,8 @@ export class Page extends Component {
       return setFirstChildElementError(e.currentTarget, 'Form is invalid. Please review all errors');
 
     const
-      email = e.currentTarget.email.value,
-      password = e.currentTarget.password.value;
+      email = e.currentTarget.email2.value,
+      password = e.currentTarget.password2.value;
 
     if (this.state.user.password === password && this.state.user.email === email) {
       this.setState({loggedIn: true });

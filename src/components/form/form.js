@@ -257,7 +257,7 @@ export const getLoginForm = (handleLoginSubmit) =>
           data-progress={0}
           data-progressid='login-form-progress'
           form='login-form'
-          id='email'
+          id='email2'
           onBlur={(e) => checkValidOnEvent(e, true)}
           onInput={(e) => checkValidOnEvent(e, true)}
           placeholder='Enter your email address'
@@ -272,7 +272,7 @@ export const getLoginForm = (handleLoginSubmit) =>
           data-progress={0}
           data-progressid='login-form-progress'
           form='login-form'
-          id='password'
+          id='password2'
           onBlur={(e) => checkValidOnEvent(e, true)}
           onInput={(e) => checkValidOnEvent(e, true)}
           placeholder='Choose a password'

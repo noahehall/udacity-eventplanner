@@ -12,7 +12,7 @@
   "scripts": {
     "prestart": "npm run eslint-fix",
     "start": "./node_modules/.bin/gulp",
-    "prod": "NODE_ENV=production ./node_modules/.bin/gulp",
+    "prod": "NODE_ENV=production ./node_modules/.bin/gulp prod && echo 'now running on localhost:3000' && node dist/server.js",
     "test": "./node_modules/.bin/gulp test",
     "eslint": "./node_modules/.bin/gulp eslint",
     "eslint-unused": "./node_modules/.bin/eslint-find-rules -u ./.eslintrc -n",
